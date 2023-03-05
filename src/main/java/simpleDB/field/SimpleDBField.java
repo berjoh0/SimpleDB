@@ -9,34 +9,40 @@ package simpleDB.field;
  *
  * @author johanbergman
  */
-interface FieldInfo {
 
+public class SimpleDBField {
     String Name = "";
     String Type = "";
     String DefaultValue = "";
+    boolean NotNull = false;
+    boolean PrimaryKey = false;
 
-    public String getName();
+    public SimpleDBField(String Name, String Type, String DefaultValue, boolean NotNull, boolean PrimaryKey) {
+        this.Name = Name;
+        this.Type = Type;
+        this.DefaultValue = DefaultValue;
+        this.NotNull = NotNull;
+        this.PrimaryKey = PrimaryKey;
+    }
 
-    public String getType();
-
-    public String getDefaultValue();
-}
-
-public class SimpleDBField implements FieldInfo {
-
-    @Override
     public String getName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Name;
     }
 
-    @Override
     public String getType() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Type;
     }
 
-    @Override
     public String getDefaultValue() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return DefaultValue;
+    }
+
+    public boolean isNotNull() {
+        return NotNull;
+    }
+
+    public boolean isPrimaryKey() {
+        return PrimaryKey;
     }
 
 }
