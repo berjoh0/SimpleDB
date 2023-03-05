@@ -13,7 +13,7 @@ interface FieldInfo {
 
     String Name = "";
     String Type = "";
-    String DefaultValue = ".";
+    String DefaultValue = "";
 
     public String getName();
 
