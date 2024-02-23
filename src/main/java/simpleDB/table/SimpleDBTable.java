@@ -7,6 +7,9 @@ package simpleDB.table;
 
 import java.util.HashMap;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import simpleDB.database.SimpleDBDatabase;
 import simpleDB.field.SimpleDBField;
 
@@ -29,6 +32,10 @@ public class SimpleDBTable {
     public boolean insertValues() {
         database.insertValues(tableName, tableFields, values);
         return true;
+    }
+
+    protected JsonArray selectValues(String sql) {
+        return database.selectValues(sql);
     }
 
     public void setValue(String field, Object value) {
