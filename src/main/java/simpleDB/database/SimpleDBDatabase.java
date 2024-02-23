@@ -3,10 +3,13 @@ package simpleDB.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Set;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import simpleDB.field.SimpleDBField;
@@ -133,5 +136,44 @@ public class SimpleDBDatabase {
             // TODO Error fix
             return 0;
         }
+    }
+
+    public JsonArray selectValues(String sql) {
+        return executeSelectSQL(sql);
+    }
+
+    private JsonArray executeSelectSQL(String SQL) {
+        try {
+            Statement stmt = createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
+            JsonArray retArray = resultSet2Json(rs);
+            stmt.close();
+            return retArray;
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO Error fix
+            return null;
+        }
+    }
+
+    private JsonArray resultSet2Json(ResultSet rs) {
+        JsonArray retArray = new JsonArray();
+        try {
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            while (rs.next()) {
+                JsonObject tRow = new JsonObject();
+                for (int i = 0; i < rsmd.getColumnCount(); i++) {
+                    tRow.addProperty(rsmd.getColumnName(i + 1), rs.getString(i + 1));
+                }
+                retArray.add(tRow);
+            }
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: handle exception
+        }
+
+        return retArray;
     }
 }
